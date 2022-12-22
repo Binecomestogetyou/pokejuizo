@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_navigation_item_traniner"
+        android:title="@string/trainer"
+        android:icon="@drawable/ic_trainer"/>
+    <item
+        android:id="@+id/bottom_navigation_item_library"
+        android:title="@string/library"
+        android:icon="@drawable/ic_library"/>
+
+    <item
+        android:id="@+id/bottom_navigation_item_settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"/>
+
+</menu>
