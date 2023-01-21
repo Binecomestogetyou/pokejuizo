@@ -1,18 +1,36 @@
 package com.bine.pokejuizo
 
-import android.os.Parcelable
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
-import kotlin.reflect.full.memberProperties
+import android.util.JsonWriter
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
+import java.util.*
 
-@Parcelize
-class Trainer (var Name : String, var Age : String, var Rank : String, var TrainersConcept : String,
-               var Nature : String) : Parcelable {
 
-    constructor() : this("", "", "", "", "") {}
+@Entity(tableName = "trainers")
+@Serializable
+class Trainer (){
 
-    lateinit var PlayersName: String
+    constructor(name : String, age : String, rank : String, nature : String) : this(){
 
+        this.Name = name
+        this.Age = age
+        this.Rank = rank
+        this.Nature = nature
+    }
+
+    @PrimaryKey
+    @NonNull
+    var id: String = "" // Leave this property as a String 'cause using Int will be hellish
+
+    lateinit var Name : String
+    lateinit var Age : String
+    lateinit var Rank : String
+  //  lateinit var TrainersConcept : String
+    lateinit var Nature : String
+
+/*
     ///////////
     // Trainer's card window
     ///////////
@@ -142,17 +160,7 @@ class Trainer (var Name : String, var Age : String, var Rank : String, var Train
                         "Profissional" -> 8
                     else -> 0
                 }
-    }
+    }*/
 
-    override fun toString(): String {
 
-        var str = ""
-
-        with(this){
-
-            for(a in Trainer::class.memberProperties) str += "${a.name}:${a.get(this)}@@@"
-        }
-
-        return str
-    }
 }

@@ -1,14 +1,15 @@
 package com.bine.pokejuizo
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextWatcher
-import android.view.View
+import android.text.TextUtils
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import com.google.gson.Gson
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 
 class NewTrainerActivity : AppCompatActivity() {
@@ -17,30 +18,38 @@ class NewTrainerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_trainer)
 
-        //TextWatcher // https://stackoverflow.com/questions/10699202/how-to-change-textviews-text-on-change-of-edittexts-text
+        val textName = findViewById<EditText>(R.id.ANTETTrainersName)
+
+        val spinnerAge = findViewById<Spinner>(R.id.ANTSAge)
+
+        val spinnerRank = findViewById<Spinner>(R.id.ANTSRank)
+
+        val spinnerNature = findViewById<Spinner>(R.id.ANTSNature)
+
+
+        val saveButton = findViewById<Button>(R.id.ANTBCreate)
+
+
+        saveButton.setOnClickListener{
+
+            val trainer = Trainer()
+
+            trainer.Name = if (TextUtils.isEmpty(textName.text)) "" else textName.text.toString()
+            trainer.Age = spinnerAge.selectedItem.toString()
+            trainer.Rank = spinnerRank.selectedItem.toString()
+            trainer.Nature = spinnerNature.selectedItem.toString()
+
+            val intent = Intent()
+
+            intent.putExtra(EXTRA_REPLY, Json.encodeToString(trainer))
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
-    fun gravarTreinador(view : View){
+    companion object{
 
-        val novo = Trainer(findViewById<EditText>(R.id.ANTETTrainersName).text.toString(),
-                            findViewById<Spinner>(R.id.ANTSAge).selectedItem.toString(),
-                            findViewById<Spinner>(R.id.ANTSRank).selectedItem.toString(),
-                            findViewById<EditText>(R.id.ANTETTrainersConcept).text.toString(),
-                            findViewById<Spinner>(R.id.ANTSNature).selectedItem.toString())
-
-       // var te
-
-        val sharedPref = getSharedPreferences(getString(R.string.com_bine_pokejuizo_shared_preferences_trainers), Context.MODE_PRIVATE) ?: return
-
-        with (sharedPref.edit()) {
-            putString("trainer${sharedPref.all.size}", (Gson()).toJson(novo))
-            apply()
-        }
-
-        val intent = Intent(this, TrainerActivity::class.java)
-        intent.putExtra("trainerkey", sharedPref.all.size - 1)
-
-        startActivity(intent)
+        const val EXTRA_REPLY = "com.bine.pokejuizo.trainerextra"
     }
 }
 

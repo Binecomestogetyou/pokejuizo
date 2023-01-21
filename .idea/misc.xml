@@ -5,11 +5,12 @@
       <map>
         <entry key="app/src/main/res/drawable/selector.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_library.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_new_trainer.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_new_trainer.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_trainer.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_trayner.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_trainer.xml" value="0.1890625" />
         <entry key="app/src/main/res/menu/menu_navigation.xml" value="0.16" />
       </map>
     </option>

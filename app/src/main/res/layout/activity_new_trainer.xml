@@ -43,40 +43,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ANTSAge" />
 
-    <EditText
-        android:id="@+id/ANTETTrainersConcept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="@string/trainers_concept"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textColorHint="#757575"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ANTSRank" />
-
     <Spinner
         android:id="@+id/ANTSNature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:entries="@array/natures"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ANTETTrainersConcept" />
+        app:layout_constraintTop_toBottomOf="@+id/ANTSRank" />
 
     <Button
         android:id="@+id/ANTBCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="168dp"
         android:onClick="gravarTreinador"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="632dp"
+        app:layout_constraintTop_toBottomOf="@+id/ANTSNature"
         tools:text="@string/save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

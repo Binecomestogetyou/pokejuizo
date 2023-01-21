@@ -14,13 +14,13 @@ class LibraryActivity : AppCompatActivity() {
 
         bottomNavigationView.selectedItemId = R.id.bottom_navigation_item_library
 
-        bottomNavigationView.setOnItemSelectedListener {
+        bottomNavigationView.setOnNavigationItemSelectedListener() {
 
             when(it.itemId) {
                 R.id.bottom_navigation_item_traniner -> {
                     startActivity(Intent(applicationContext, MainActivity::class.java))
                     overridePendingTransition(0, 0)
-                    return@setOnItemSelectedListener true
+                    return@setOnNavigationItemSelectedListener true
                 }
 
                 R.id.bottom_navigation_item_library -> true
@@ -28,7 +28,7 @@ class LibraryActivity : AppCompatActivity() {
                 R.id.bottom_navigation_item_settings -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     overridePendingTransition(0, 0)
-                    return@setOnItemSelectedListener true
+                    return@setOnNavigationItemSelectedListener true
                 }
 
                 else -> false
