@@ -15,7 +15,6 @@ class AbilitiesAdapter : ListAdapter<Ability, AbilitiesAdapter.AbilityViewHolder
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : AbilityViewHolder {
 
-        println("Called onCreateViewHolder")
         return AbilityViewHolder.create(parent)
     }
 

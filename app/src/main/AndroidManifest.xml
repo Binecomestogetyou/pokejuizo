@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pokejuizo">
         <activity
+            android:name=".item.ShowItem"
+            android:exported="false" />
+        <activity
             android:name=".ability.ShowAbility"
             android:exported="false" />
         <activity

@@ -7,6 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bine.pokejuizo.ability.Ability
 import com.bine.pokejuizo.ability.AbilityDAO
+import com.bine.pokejuizo.item.Item
+import com.bine.pokejuizo.item.ItemDAO
 import com.bine.pokejuizo.trainer.Trainer
 import com.bine.pokejuizo.trainer.TrainerDAO
 import kotlinx.coroutines.CoroutineScope
@@ -14,11 +16,12 @@ import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@Database(version = 2, entities = [Trainer::class, Ability::class], exportSchema = false)
+@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class], exportSchema = false)
 abstract class DataBase : RoomDatabase() {
 
     abstract fun trainerDAO() : TrainerDAO
     abstract fun abilityDAO() : AbilityDAO
+    abstract fun itemDAO() : ItemDAO
 
 
     companion object{
@@ -34,7 +37,7 @@ abstract class DataBase : RoomDatabase() {
                     context.applicationContext,
                     DataBase::class.java,
                     dbName
-                ).addCallback(AbilityDatabaseCallback(context, scope))
+                ).addCallback(DatabaseCallback(context, scope))
                     .build()
                 instance = inst
                 // return inst
@@ -43,7 +46,7 @@ abstract class DataBase : RoomDatabase() {
         }
     }
 
-    private class AbilityDatabaseCallback(
+    private class DatabaseCallback(
         val context: Context,
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
@@ -52,24 +55,35 @@ abstract class DataBase : RoomDatabase() {
             super.onCreate(db)
             instance?.let { database ->
                 scope.launch {
-                    populateDatabase(database.abilityDAO())
+                    populateDatabase(database.abilityDAO(), database.itemDAO())
                 }
             }
         }
 
-        suspend fun populateDatabase(abilityDAO: AbilityDAO) {
+        suspend fun populateDatabase(abilityDAO: AbilityDAO, itemDAO: ItemDAO) {
 
-            println("PopulateDatabase was called")
+            var fileList = context.assets.list("abilities/")
 
-            val jsonabilities = context.assets.list("abilities/")
-
-            for(ja in jsonabilities!!){
+            for(ja in fileList!!){
 
                 val reader = BufferedReader(
-                    InputStreamReader(context.assets.open("abilities/${ja}"))
+                    InputStreamReader(context.assets.open("abilities/$ja"))
                 )
 
                 abilityDAO.addAbility(Ability(reader.readText()))
+            }
+
+            fileList = context.assets.list("items/")
+
+
+
+            for(ja in fileList!!){
+
+                val reader = BufferedReader(
+                    InputStreamReader(context.assets.open("items/$ja"))
+                )
+
+                itemDAO.addItem(Item(reader.readText()))
             }
         }
     }

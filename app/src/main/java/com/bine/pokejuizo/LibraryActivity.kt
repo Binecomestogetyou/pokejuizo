@@ -51,6 +51,8 @@ class LibraryActivity : AppCompatActivity() {
 
         val str = (view as Button).text.toString()
 
+        println("LibraryActivity intent got $str")
+
         intent.putExtra("BOOKCASE", str)
 
         startActivity(intent)
