@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bine.pokejuizo.trainer.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val newTrainerActivityRequestCode = 1
 
     private val trainerViewModel: TrainerViewModel by viewModels {
-        TrainerViewModelFactory((application as PokeRoleApplication).repository)
+        TrainerViewModelFactory((application as PokeRoleApplication).trainerRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         // Configurando a recycler view
 
-        val recyclerView = findViewById<View>(R.id.activity_main_recycler_view) as RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.activity_main_recycler_view)
 
         val linearLayoutManager = LinearLayoutManager(this)
 
@@ -39,10 +40,12 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter = adapter
 
-        trainerViewModel.allTrainers.observe(this) { words ->
+        trainerViewModel.allTrainers.observe(this) { trainers ->
             // Update the cached copy of the words in the adapter.
-            words?.let { adapter.submitList(it) }
+            trainers?.let { adapter.submitList(it) }
         }
+
+
 
         // Configurando a Bottom Navigation View
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)

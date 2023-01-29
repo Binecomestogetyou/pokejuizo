@@ -56,4 +56,9 @@
     <string name="trainer">Trainer</string>
     <string name="library">Biblioteca</string>
     <string name="settings">Configurações</string>
+    <string name="pokedex">Pokedex</string>
+    <string name="items">Items</string>
+    <string name="abilities">Abilities</string>
+    <string name="moves">Moves</string>
+    <string name="natures">Natures</string>
 </resources>

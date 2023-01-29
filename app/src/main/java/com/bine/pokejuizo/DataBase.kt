@@ -5,31 +5,36 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.bine.pokejuizo.ability.Ability
+import com.bine.pokejuizo.ability.AbilityDAO
+import com.bine.pokejuizo.trainer.Trainer
+import com.bine.pokejuizo.trainer.TrainerDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
-@Database(version = 1, entities = [Trainer::class], exportSchema = false)
+@Database(version = 2, entities = [Trainer::class, Ability::class], exportSchema = false)
 abstract class DataBase : RoomDatabase() {
 
     abstract fun trainerDAO() : TrainerDAO
+    abstract fun abilityDAO() : AbilityDAO
 
 
     companion object{
 
-        private const val dbName = "TRAINERS"
+        private const val dbName = "pokejuizoDB"
 
         private var instance : DataBase? = null
 
         fun getDataBase(context : Context, scope: CoroutineScope) : DataBase {
-            println("getDataBase was called")
 
             return instance ?: synchronized(this) {
                 val inst = Room.databaseBuilder(
                     context.applicationContext,
                     DataBase::class.java,
                     dbName
-                ).addCallback(TrainerDatabaseCallback(scope))
+                ).addCallback(AbilityDatabaseCallback(context, scope))
                     .build()
                 instance = inst
                 // return inst
@@ -38,7 +43,8 @@ abstract class DataBase : RoomDatabase() {
         }
     }
 
-    private class TrainerDatabaseCallback(
+    private class AbilityDatabaseCallback(
+        val context: Context,
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
@@ -46,21 +52,25 @@ abstract class DataBase : RoomDatabase() {
             super.onCreate(db)
             instance?.let { database ->
                 scope.launch {
-                    populateDatabase(database.trainerDAO())
+                    populateDatabase(database.abilityDAO())
                 }
             }
         }
 
-        suspend fun populateDatabase(trainerDAO: TrainerDAO) {
-            // Delete all content here.
-            trainerDAO.deleteAll()
+        suspend fun populateDatabase(abilityDAO: AbilityDAO) {
 
-            // Add sample words.
-            val trainer = Trainer("Tutu", "Adult", "Starter", "Cansei")
+            println("PopulateDatabase was called")
 
-            trainerDAO.addTrainer(trainer)
+            val jsonabilities = context.assets.list("abilities/")
 
-            println("Populate database finished")
+            for(ja in jsonabilities!!){
+
+                val reader = BufferedReader(
+                    InputStreamReader(context.assets.open("abilities/${ja}"))
+                )
+
+                abilityDAO.addAbility(Ability(reader.readText()))
+            }
         }
     }
 }

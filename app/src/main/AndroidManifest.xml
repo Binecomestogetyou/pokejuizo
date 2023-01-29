@@ -11,16 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pokejuizo">
         <activity
+            android:name=".ability.ShowAbility"
+            android:exported="false" />
+        <activity
+            android:name=".BookCaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".trainer.ShowTrainer"
+            android:exported="false" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".LibraryActivity"
             android:exported="false" />
         <activity
-            android:name=".TrainerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NewTrainerActivity"
+            android:name=".trainer.NewTrainerActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

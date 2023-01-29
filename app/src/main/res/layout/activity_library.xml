@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LibraryActivity">
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
+        android:id="@+id/LA_LL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:orientation="vertical">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
+        <Button
+            android:id="@+id/LA_B_POKEDEX"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            app:itemBackground="@color/teal_700"
-            app:itemIconTint="@drawable/selector"
-            app:itemTextColor="@drawable/selector"
-            app:menu="@menu/menu_navigation" />
+            android:layout_height="wrap_content"
+            android:text="@string/pokedex" />
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/LA_B_ABILITIES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/abilities" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/LA_B_ITEMS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/items" />
+
+        <Button
+            android:id="@+id/LA_B_MOVES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/moves" />
+
+        <Button
+            android:id="@+id/LA_B_NATURES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/natures" />
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/teal_700"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation" />
+
+</RelativeLayout>
