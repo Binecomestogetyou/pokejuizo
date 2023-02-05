@@ -11,6 +11,9 @@ import com.bine.pokejuizo.ability.AbilityViewModelFactory
 import com.bine.pokejuizo.item.ItemViewModel
 import com.bine.pokejuizo.item.ItemViewModelFactory
 import com.bine.pokejuizo.item.ItemAdapter
+import com.bine.pokejuizo.move.MoveViewModel
+import com.bine.pokejuizo.move.MoveViewModelFactory
+import com.bine.pokejuizo.move.MovesAdapter
 
 class BookCaseActivity : AppCompatActivity() {
 
@@ -20,6 +23,10 @@ class BookCaseActivity : AppCompatActivity() {
 
     private val itemViewModel: ItemViewModel by viewModels {
         ItemViewModelFactory((application as PokeRoleApplication).itemRepository)
+    }
+
+    private val moveViewModel: MoveViewModel by viewModels {
+        MoveViewModelFactory((application as PokeRoleApplication).moveRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +64,18 @@ class BookCaseActivity : AppCompatActivity() {
                 itemViewModel.allItems.observe(this) { items ->
 
                     items?.let { adapter.submitList(it) }
+                }
+            }
+
+            "Moves" -> {
+
+                val adapter = MovesAdapter()
+
+                recyclerView.adapter = adapter
+
+                moveViewModel.allMoves.observe(this) { moves ->
+
+                    moves?.let { adapter.submitList(it) }
                 }
             }
         }

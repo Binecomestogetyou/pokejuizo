@@ -9,6 +9,8 @@ import com.bine.pokejuizo.ability.Ability
 import com.bine.pokejuizo.ability.AbilityDAO
 import com.bine.pokejuizo.item.Item
 import com.bine.pokejuizo.item.ItemDAO
+import com.bine.pokejuizo.move.Move
+import com.bine.pokejuizo.move.MoveDAO
 import com.bine.pokejuizo.trainer.Trainer
 import com.bine.pokejuizo.trainer.TrainerDAO
 import kotlinx.coroutines.CoroutineScope
@@ -16,12 +18,13 @@ import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class], exportSchema = false)
+@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class], exportSchema = false)
 abstract class DataBase : RoomDatabase() {
 
     abstract fun trainerDAO() : TrainerDAO
     abstract fun abilityDAO() : AbilityDAO
     abstract fun itemDAO() : ItemDAO
+    abstract fun moveDAO() : MoveDAO
 
 
     companion object{
@@ -55,12 +58,12 @@ abstract class DataBase : RoomDatabase() {
             super.onCreate(db)
             instance?.let { database ->
                 scope.launch {
-                    populateDatabase(database.abilityDAO(), database.itemDAO())
+                    populateDatabase(database.abilityDAO(), database.itemDAO(), database.moveDAO())
                 }
             }
         }
 
-        suspend fun populateDatabase(abilityDAO: AbilityDAO, itemDAO: ItemDAO) {
+        suspend fun populateDatabase(abilityDAO: AbilityDAO, itemDAO: ItemDAO, moveDAO: MoveDAO) {
 
             var fileList = context.assets.list("abilities/")
 
@@ -73,9 +76,9 @@ abstract class DataBase : RoomDatabase() {
                 abilityDAO.addAbility(Ability(reader.readText()))
             }
 
+
+
             fileList = context.assets.list("items/")
-
-
 
             for(ja in fileList!!){
 
@@ -84,6 +87,19 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 itemDAO.addItem(Item(reader.readText()))
+            }
+
+
+
+            fileList = context.assets.list("moves/")
+
+            for(ja in fileList!!){
+
+                val reader = BufferedReader(
+                    InputStreamReader(context.assets.open("moves/$ja"))
+                )
+
+                moveDAO.addMove(Move(reader.readText()))
             }
         }
     }
