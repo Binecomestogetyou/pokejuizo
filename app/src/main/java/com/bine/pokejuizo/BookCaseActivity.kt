@@ -14,6 +14,9 @@ import com.bine.pokejuizo.item.ItemAdapter
 import com.bine.pokejuizo.move.MoveViewModel
 import com.bine.pokejuizo.move.MoveViewModelFactory
 import com.bine.pokejuizo.move.MovesAdapter
+import com.bine.pokejuizo.nature.NatureAdapter
+import com.bine.pokejuizo.nature.NatureViewModel
+import com.bine.pokejuizo.nature.NatureViewModelFactory
 
 class BookCaseActivity : AppCompatActivity() {
 
@@ -27,6 +30,10 @@ class BookCaseActivity : AppCompatActivity() {
 
     private val moveViewModel: MoveViewModel by viewModels {
         MoveViewModelFactory((application as PokeRoleApplication).moveRepository)
+    }
+
+    private val natureViewModel: NatureViewModel by viewModels {
+        NatureViewModelFactory((application as PokeRoleApplication).natureRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +83,18 @@ class BookCaseActivity : AppCompatActivity() {
                 moveViewModel.allMoves.observe(this) { moves ->
 
                     moves?.let { adapter.submitList(it) }
+                }
+            }
+
+            "Natures" -> {
+
+                val adapter = NatureAdapter()
+
+                recyclerView.adapter = adapter
+
+                natureViewModel.allNatures.observe(this) { natures ->
+
+                    natures?.let { adapter.submitList(it) }
                 }
             }
         }

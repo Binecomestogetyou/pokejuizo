@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bine.pokejuizo.ability.Ability
 import com.bine.pokejuizo.ability.AbilityDAO
@@ -11,6 +12,8 @@ import com.bine.pokejuizo.item.Item
 import com.bine.pokejuizo.item.ItemDAO
 import com.bine.pokejuizo.move.Move
 import com.bine.pokejuizo.move.MoveDAO
+import com.bine.pokejuizo.nature.Nature
+import com.bine.pokejuizo.nature.NatureDAO
 import com.bine.pokejuizo.trainer.Trainer
 import com.bine.pokejuizo.trainer.TrainerDAO
 import kotlinx.coroutines.CoroutineScope
@@ -18,13 +21,15 @@ import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class], exportSchema = false)
+@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class], exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class DataBase : RoomDatabase() {
 
     abstract fun trainerDAO() : TrainerDAO
     abstract fun abilityDAO() : AbilityDAO
     abstract fun itemDAO() : ItemDAO
     abstract fun moveDAO() : MoveDAO
+    abstract fun natureDAO() : NatureDAO
 
 
     companion object{
@@ -58,12 +63,12 @@ abstract class DataBase : RoomDatabase() {
             super.onCreate(db)
             instance?.let { database ->
                 scope.launch {
-                    populateDatabase(database.abilityDAO(), database.itemDAO(), database.moveDAO())
+                    populateDatabase(database.abilityDAO(), database.itemDAO(), database.moveDAO(), database.natureDAO())
                 }
             }
         }
 
-        suspend fun populateDatabase(abilityDAO: AbilityDAO, itemDAO: ItemDAO, moveDAO: MoveDAO) {
+        suspend fun populateDatabase(abilityDAO: AbilityDAO, itemDAO: ItemDAO, moveDAO: MoveDAO, natureDAO: NatureDAO) {
 
             var fileList = context.assets.list("abilities/")
 
@@ -100,6 +105,19 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 moveDAO.addMove(Move(reader.readText()))
+            }
+
+
+
+            fileList = context.assets.list("natures/")
+
+            for(ja in fileList!!){
+
+                val reader = BufferedReader(
+                    InputStreamReader(context.assets.open("natures/$ja"))
+                )
+
+                natureDAO.addNature(Nature(reader.readText()))
             }
         }
     }
