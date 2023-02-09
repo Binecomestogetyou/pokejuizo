@@ -11,6 +11,9 @@ import com.bine.pokejuizo.ability.AbilityViewModelFactory
 import com.bine.pokejuizo.item.ItemViewModel
 import com.bine.pokejuizo.item.ItemViewModelFactory
 import com.bine.pokejuizo.item.ItemAdapter
+import com.bine.pokejuizo.learnset.LearnsetAdapter
+import com.bine.pokejuizo.learnset.LearnsetViewModel
+import com.bine.pokejuizo.learnset.LearnsetViewModelFactory
 import com.bine.pokejuizo.move.MoveViewModel
 import com.bine.pokejuizo.move.MoveViewModelFactory
 import com.bine.pokejuizo.move.MovesAdapter
@@ -34,6 +37,10 @@ class BookCaseActivity : AppCompatActivity() {
 
     private val natureViewModel: NatureViewModel by viewModels {
         NatureViewModelFactory((application as PokeRoleApplication).natureRepository)
+    }
+
+    private val learnsetViewModel: LearnsetViewModel by viewModels {
+        LearnsetViewModelFactory((application as PokeRoleApplication).learnsetRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +102,18 @@ class BookCaseActivity : AppCompatActivity() {
                 natureViewModel.allNatures.observe(this) { natures ->
 
                     natures?.let { adapter.submitList(it) }
+                }
+            }
+
+            "Learnsets" -> {
+
+                val adapter = LearnsetAdapter()
+
+                recyclerView.adapter = adapter
+
+                learnsetViewModel.allLearnsets.observe(this) { learnsets ->
+
+                    learnsets?.let { adapter.submitList(it) }
                 }
             }
         }

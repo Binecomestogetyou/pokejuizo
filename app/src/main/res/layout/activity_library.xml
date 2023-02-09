@@ -41,6 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/natures" />
+
+        <Button
+            android:id="@+id/LA_B_LEARNSETS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/learnsets" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

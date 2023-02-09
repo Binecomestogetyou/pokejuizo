@@ -10,6 +10,8 @@ import com.bine.pokejuizo.ability.Ability
 import com.bine.pokejuizo.ability.AbilityDAO
 import com.bine.pokejuizo.item.Item
 import com.bine.pokejuizo.item.ItemDAO
+import com.bine.pokejuizo.learnset.Learnset
+import com.bine.pokejuizo.learnset.LearnsetDAO
 import com.bine.pokejuizo.move.Move
 import com.bine.pokejuizo.move.MoveDAO
 import com.bine.pokejuizo.nature.Nature
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class], exportSchema = false)
+@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class, Learnset::class], exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class DataBase : RoomDatabase() {
 
@@ -30,6 +32,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun itemDAO() : ItemDAO
     abstract fun moveDAO() : MoveDAO
     abstract fun natureDAO() : NatureDAO
+    abstract fun learnsetDAO() : LearnsetDAO
 
 
     companion object{
@@ -63,12 +66,20 @@ abstract class DataBase : RoomDatabase() {
             super.onCreate(db)
             instance?.let { database ->
                 scope.launch {
-                    populateDatabase(database.abilityDAO(), database.itemDAO(), database.moveDAO(), database.natureDAO())
+                    populateDatabase(database.abilityDAO(),
+                        database.itemDAO(),
+                        database.moveDAO(),
+                        database.natureDAO(),
+                        database.learnsetDAO())
                 }
             }
         }
 
-        suspend fun populateDatabase(abilityDAO: AbilityDAO, itemDAO: ItemDAO, moveDAO: MoveDAO, natureDAO: NatureDAO) {
+        suspend fun populateDatabase(abilityDAO: AbilityDAO,
+                                     itemDAO: ItemDAO,
+                                     moveDAO: MoveDAO,
+                                     natureDAO: NatureDAO,
+                                     learnsetDAO: LearnsetDAO) {
 
             var fileList = context.assets.list("abilities/")
 
@@ -118,6 +129,19 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 natureDAO.addNature(Nature(reader.readText()))
+            }
+
+
+
+            fileList = context.assets.list("learnsets/")
+
+            for(ja in fileList!!){
+
+                val reader = BufferedReader(
+                    InputStreamReader(context.assets.open("learnsets/$ja"))
+                )
+
+                learnsetDAO.addLearnset(Learnset(reader.readText()))
             }
         }
     }
