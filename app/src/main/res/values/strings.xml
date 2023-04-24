@@ -53,13 +53,18 @@
     <string name="com_bine_pokejuizo_shared_preferences">com_bine_pokejuizo_shared_preferences</string>
     <string name="com_bine_pokejuizo_shared_preferences_trainers">Trainers</string>
     <string name="textview">TextView</string>
-    <string name="trainer">Trainer</string>
+    <string name="trainer">Trainador</string>
     <string name="library">Biblioteca</string>
     <string name="settings">Configurações</string>
     <string name="pokedex">Pokedex</string>
-    <string name="items">Items</string>
+    <string name="items">Itens</string>
     <string name="abilities">Abilities</string>
-    <string name="moves">Moves</string>
-    <string name="natures">Natures</string>
-    <string name="learnsets">Learnsets</string>
+    <string name="moves">Movimentos</string>
+    <string name="natures">Naturezas</string>
+    <string name="learnsets"></string>
+    <string name="Conceito">Conceito</string>
+    <string name="Força">Força</string>
+    <string name="Destreza">Destreza</string>
+    <string name="Vitalidade">Vitalidade</string>
+    <string name="Intuição">Intuição</string>
 </resources>

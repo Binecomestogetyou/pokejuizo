@@ -16,6 +16,8 @@ import com.bine.pokejuizo.move.Move
 import com.bine.pokejuizo.move.MoveDAO
 import com.bine.pokejuizo.nature.Nature
 import com.bine.pokejuizo.nature.NatureDAO
+import com.bine.pokejuizo.pokemon.Pokemon
+import com.bine.pokejuizo.pokemon.PokemonDAO
 import com.bine.pokejuizo.trainer.Trainer
 import com.bine.pokejuizo.trainer.TrainerDAO
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +25,7 @@ import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class, Learnset::class], exportSchema = false)
+@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class, Learnset::class, Pokemon::class], exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class DataBase : RoomDatabase() {
 
@@ -33,6 +35,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun moveDAO() : MoveDAO
     abstract fun natureDAO() : NatureDAO
     abstract fun learnsetDAO() : LearnsetDAO
+    abstract fun pokemonDAO() : PokemonDAO
 
 
     companion object{
@@ -70,7 +73,8 @@ abstract class DataBase : RoomDatabase() {
                         database.itemDAO(),
                         database.moveDAO(),
                         database.natureDAO(),
-                        database.learnsetDAO())
+                        database.learnsetDAO(),
+                        database.pokemonDAO())
                 }
             }
         }
@@ -79,7 +83,8 @@ abstract class DataBase : RoomDatabase() {
                                      itemDAO: ItemDAO,
                                      moveDAO: MoveDAO,
                                      natureDAO: NatureDAO,
-                                     learnsetDAO: LearnsetDAO) {
+                                     learnsetDAO: LearnsetDAO,
+                                     pokemonDAO: PokemonDAO) {
 
             var fileList = context.assets.list("abilities/")
 
@@ -90,6 +95,8 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 abilityDAO.addAbility(Ability(reader.readText()))
+
+                reader.close()
             }
 
 
@@ -103,6 +110,8 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 itemDAO.addItem(Item(reader.readText()))
+
+                reader.close()
             }
 
 
@@ -116,6 +125,8 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 moveDAO.addMove(Move(reader.readText()))
+
+                reader.close()
             }
 
 
@@ -129,6 +140,8 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 natureDAO.addNature(Nature(reader.readText()))
+
+                reader.close()
             }
 
 
@@ -142,6 +155,21 @@ abstract class DataBase : RoomDatabase() {
                 )
 
                 learnsetDAO.addLearnset(Learnset(reader.readText()))
+
+                reader.close()
+            }
+
+            fileList = context.assets.list("pokedex/")
+
+            for(ja in fileList!!){
+
+                val reader = BufferedReader(
+                    InputStreamReader(context.assets.open("pokedex/$ja"))
+                )
+
+                pokemonDAO.addPokemon(Pokemon(reader.readText()))
+
+                reader.close()
             }
         }
     }

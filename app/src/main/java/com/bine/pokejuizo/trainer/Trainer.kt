@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
+import java.util.*
 
 
 @Entity(tableName = "trainers")
@@ -12,7 +13,7 @@ class Trainer (){
 
     constructor(name : String, age : String, rank : String, nature : String) : this(){
 
-        this.Name = name
+        this.name = name
         this.Age = age
         this.Rank = rank
         this.Nature = nature
@@ -22,31 +23,30 @@ class Trainer (){
     @NonNull
     var id: String = "" // Leave this property as a String 'cause using Int will be hellish
 
-    lateinit var Name : String
+    lateinit var name : String
     lateinit var Age : String
     lateinit var Rank : String
   //  lateinit var TrainersConcept : String
     lateinit var Nature : String
 
-/*
     ///////////
     // Trainer's card window
     ///////////
-    var Confidence = 0
-    var Money = 0f
-    var HP = 0
-    var Will = 0
+    var confidence = 0
+    var money = 0f
+    var hp = 0
+    var will = 0
     //var TrainersActiveParty: LinkedList<Pokemon?>? = null
 
     /////////
     // Attributes and skills window
     /////////
     // Attributes
-    var Strength = 1
-    var Dexterity = 1
-    var Vitality = 1
-    var Insight = 1
-
+    var Strength = 0
+    var Dexterity = 0
+    var Vitality = 0
+    var Insight = 0
+/*
     // Social attributes
     var Tough = 0
     var Cool = 0

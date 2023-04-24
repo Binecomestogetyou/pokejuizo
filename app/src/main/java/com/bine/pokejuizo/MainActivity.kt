@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,13 @@ import kotlinx.serialization.decodeFromString
 
 class MainActivity : AppCompatActivity() {
 
-    private val newTrainerActivityRequestCode = 1
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            processResult(data)
+        }
+    }
 
     private val trainerViewModel: TrainerViewModel by viewModels {
         TrainerViewModelFactory((application as PokeRoleApplication).trainerRepository)
@@ -76,13 +83,11 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickOnFAB(view: View){
 
-        startActivityForResult(Intent(this, NewTrainerActivity::class.java), newTrainerActivityRequestCode)
+        resultLauncher.launch(Intent(this, NewTrainerActivity::class.java))
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    fun processResult(data: Intent?) {
 
-        if (requestCode == newTrainerActivityRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(NewTrainerActivity.EXTRA_REPLY)?.let { reply ->
                 val trainer = Json.decodeFromString<Trainer>(reply)
 
@@ -94,6 +99,5 @@ class MainActivity : AppCompatActivity() {
 
                 trainerViewModel.insert(trainer)
             }
-        }
     }
 }

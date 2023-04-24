@@ -33,7 +33,7 @@ class TrainersAdapter : ListAdapter<Trainer, TrainersAdapter.TrainerViewHolder>(
 
         fun bind(trainer: Trainer?) {
 
-            trainerName.text = trainer!!.Name
+            trainerName.text = trainer!!.name
             trainerRank.text = trainer.Rank
             trainerAge.text = trainer.Age
             trainerNature.text = trainer.Nature

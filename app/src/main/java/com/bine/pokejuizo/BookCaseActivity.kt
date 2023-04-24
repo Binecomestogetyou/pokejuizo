@@ -20,8 +20,15 @@ import com.bine.pokejuizo.move.MovesAdapter
 import com.bine.pokejuizo.nature.NatureAdapter
 import com.bine.pokejuizo.nature.NatureViewModel
 import com.bine.pokejuizo.nature.NatureViewModelFactory
+import com.bine.pokejuizo.pokemon.PokemonAdapter
+import com.bine.pokejuizo.pokemon.PokemonViewModel
+import com.bine.pokejuizo.pokemon.PokemonViewModelFactory
 
 class BookCaseActivity : AppCompatActivity() {
+
+    private val pokemonViewModel: PokemonViewModel by viewModels {
+        PokemonViewModelFactory((application as PokeRoleApplication).pokemonRepository)
+    }
 
     private val abilityViewModel: AbilityViewModel by viewModels {
         AbilityViewModelFactory((application as PokeRoleApplication).abilityRepository)
@@ -56,6 +63,18 @@ class BookCaseActivity : AppCompatActivity() {
         linearLayoutManager.also { recyclerView.layoutManager = it }
 
         when(intent.getStringExtra("BOOKCASE")) {
+
+            "Pokedex" -> {
+
+                val adapter = PokemonAdapter()
+
+                recyclerView.adapter = adapter
+
+                pokemonViewModel.allPokemon.observe(this) { pokemon ->
+
+                    pokemon?.let { adapter.submitList(it) }
+                }
+            }
 
             "Abilities" -> {
 
