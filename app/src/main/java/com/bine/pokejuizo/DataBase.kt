@@ -46,6 +46,10 @@ abstract class DataBase : RoomDatabase() {
 
         fun getDataBase(context : Context, scope: CoroutineScope) : DataBase {
 
+            for(i in 0..10) println(i)
+            println("I started building a database")
+            for(i in 0..10) println(i)
+
             return instance ?: synchronized(this) {
                 val inst = Room.databaseBuilder(
                     context.applicationContext,

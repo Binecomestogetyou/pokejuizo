@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.bine.pokejuizo"
@@ -57,8 +57,9 @@ dependencies {
 
     // Room components
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     // Lifecycle components

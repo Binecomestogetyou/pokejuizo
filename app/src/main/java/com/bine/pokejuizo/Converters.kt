@@ -11,13 +11,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromStringIntoArray(str : String) : Array<String> {
+    fun toArrayString(str : String) : Array<String> {
 
         return str.split(Regex(", ")).toTypedArray()
     }
 
     @TypeConverter
-    fun fromListPairString(list: MutableList<Pair<String, String>>): String {
+    fun fromListPairStringString(list: MutableList<Pair<String, String>>): String {
 
         return list.map { element ->
             element.first + "::" + element.second }
@@ -25,7 +25,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromString(str : String) : MutableList<Pair<String, String>> {
+    fun toListPairStringString(str : String) : MutableList<Pair<String, String>> {
 
         return str.split(", ").map { element ->
                 Pair(
@@ -33,5 +33,24 @@ class Converters {
                     element.split("::")[1]
                 )
             } as MutableList<Pair<String, String>>
+    }
+
+    @TypeConverter
+    fun fromListPairStringInt(list: MutableList<Pair<String, Int>>): String {
+
+        return list.map { element ->
+            element.first + "::" + element.second }
+            .joinToString(", ")
+    }
+
+    @TypeConverter
+    fun toListPairStingInt(str : String) : MutableList<Pair<String, Int>> {
+
+        return str.split(", ").map { element ->
+            Pair(
+                element.split("::")[0],
+                element.split("::")[1].toInt()
+            )
+        } as MutableList<Pair<String, Int>>
     }
 }

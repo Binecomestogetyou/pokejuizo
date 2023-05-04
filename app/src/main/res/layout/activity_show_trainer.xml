@@ -45,4 +45,14 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ST_TV_RANK" />
+
+    <TextView
+        android:id="@+id/ST_TV_CONFIDENCE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ST_TV_NATURE" />
 </androidx.constraintlayout.widget.ConstraintLayout>

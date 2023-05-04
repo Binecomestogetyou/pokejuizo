@@ -17,8 +17,8 @@ class SettingsActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
 
             when(it.itemId) {
-                R.id.bottom_navigation_item_traniner -> {
-                    startActivity(Intent(applicationContext, MainActivity::class.java))
+                R.id.bottom_navigation_item_trainer -> {
+                    startActivity(Intent(applicationContext, TrainerActivity::class.java))
                     overridePendingTransition(0, 0)
                     return@setOnNavigationItemSelectedListener true
                 }

@@ -17,7 +17,7 @@ class PokeRoleApplication : Application() {
 
     private val dataBase by lazy { DataBase.getDataBase(this, applicationScope) }
     val trainerRepository by lazy { TrainerRepository(dataBase.trainerDAO()) }
-    val pokemonRepository by lazy {PokemonRepository(dataBase.pokemonDAO())}
+    val pokemonRepository by lazy { PokemonRepository(dataBase.pokemonDAO()) }
     val abilityRepository by lazy { AbilityRepository(dataBase.abilityDAO()) }
     val itemRepository by lazy { ItemRepository(dataBase.itemDAO()) }
     val moveRepository by lazy { MoveRepository(dataBase.moveDAO()) }

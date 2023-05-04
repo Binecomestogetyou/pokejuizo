@@ -34,9 +34,9 @@ class TrainersAdapter : ListAdapter<Trainer, TrainersAdapter.TrainerViewHolder>(
         fun bind(trainer: Trainer?) {
 
             trainerName.text = trainer!!.name
-            trainerRank.text = trainer.Rank
-            trainerAge.text = trainer.Age
-            trainerNature.text = trainer.Nature
+            trainerRank.text = trainer.rank
+            trainerAge.text = trainer.age
+            trainerNature.text = trainer.nature
 
             view.setOnClickListener {
 

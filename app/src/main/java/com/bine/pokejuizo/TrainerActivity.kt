@@ -1,29 +1,20 @@
 package com.bine.pokejuizo
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bine.pokejuizo.trainer.*
+import com.bine.pokejuizo.trainer.NewTrainerActivity
+import com.bine.pokejuizo.trainer.TrainerViewModel
+import com.bine.pokejuizo.trainer.TrainerViewModelFactory
+import com.bine.pokejuizo.trainer.TrainersAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.decodeFromString
 
 
-class MainActivity : AppCompatActivity() {
-
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // There are no request codes
-            val data: Intent? = result.data
-            processResult(data)
-        }
-    }
+class TrainerActivity : AppCompatActivity() {
 
     private val trainerViewModel: TrainerViewModel by viewModels {
         TrainerViewModelFactory((application as PokeRoleApplication).trainerRepository)
@@ -57,12 +48,12 @@ class MainActivity : AppCompatActivity() {
         // Configurando a Bottom Navigation View
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        bottomNavigationView.selectedItemId = R.id.bottom_navigation_item_traniner
+        bottomNavigationView.selectedItemId = R.id.bottom_navigation_item_trainer
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
 
                 when(it.itemId) {
-                    R.id.bottom_navigation_item_traniner -> true
+                    R.id.bottom_navigation_item_trainer -> true
 
                     R.id.bottom_navigation_item_library -> {
                         startActivity(Intent(applicationContext, LibraryActivity::class.java))
@@ -83,21 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickOnFAB(view: View){
 
-        resultLauncher.launch(Intent(this, NewTrainerActivity::class.java))
-    }
-
-    fun processResult(data: Intent?) {
-
-            data?.getStringExtra(NewTrainerActivity.EXTRA_REPLY)?.let { reply ->
-                val trainer = Json.decodeFromString<Trainer>(reply)
-
-                var id = 0
-
-                while(!trainerViewModel.idIsVacant(Char(id).toString())) id++
-
-                trainer.id = Char(id).toString()
-
-                trainerViewModel.insert(trainer)
-            }
+        startActivity(Intent(this, NewTrainerActivity::class.java))
     }
 }

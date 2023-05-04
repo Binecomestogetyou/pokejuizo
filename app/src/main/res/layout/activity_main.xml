@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".TrainerActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_main_recycler_view"
@@ -18,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
-            app:itemBackground="@color/teal_700"
-            app:itemIconTint="@drawable/selector"
-            app:itemTextColor="@drawable/selector"
+            app:itemBackground="@color/black"
+            app:itemIconTint="@drawable/selector_bottom_navigation"
+            app:itemTextColor="@drawable/selector_bottom_navigation"
             app:menu="@menu/menu_navigation" >
         </com.google.android.material.bottomnavigation.BottomNavigationView>
 

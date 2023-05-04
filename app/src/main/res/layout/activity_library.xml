@@ -55,8 +55,8 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         app:itemBackground="@color/teal_700"
-        app:itemIconTint="@drawable/selector"
-        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector_bottom_navigation"
+        app:itemTextColor="@drawable/selector_bottom_navigation"
         app:menu="@menu/menu_navigation" />
 
 </RelativeLayout>

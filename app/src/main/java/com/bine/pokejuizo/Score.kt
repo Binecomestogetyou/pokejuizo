@@ -1,16 +1,20 @@
 package com.bine.pokejuizo
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.*
+import androidx.core.content.ContextCompat
+import com.bine.pokejuizo.trainer.toPx
 import java.util.*
 
 class Score @JvmOverloads constructor (ctx : Context, attributeSet: AttributeSet? = null, defStyle : Int = 0) : LinearLayout(ctx, attributeSet, defStyle){
 
     var textView : TextView
 
-    var buttons : LinkedList<ToggleButton> = LinkedList()
+    private var buttons : LinkedList<CheckBox> = LinkedList()
+    private var min : Int = 0
 
     var text : String
     get() { return textView.text.toString() }
@@ -28,18 +32,63 @@ class Score @JvmOverloads constructor (ctx : Context, attributeSet: AttributeSet
 
             val attr = ctx.obtainStyledAttributes(attributeSet, R.styleable.Score)
 
+            textView.setTextColor(attr.getColor(R.styleable.Score_text_color, 0xFF000000.toInt()))
+
             text = attr.getString(R.styleable.Score_text).toString()
 
             val linearLayout = findViewById<LinearLayout>(R.id.SV_LL)
 
-            var maxButtons = attr.getInt(R.styleable.Score_max, 1)
+            var maxButtons = attr.getInt(R.styleable.Score_max, 5)
 
-            val minButtons = attr
+            min = attr.getInt(R.styleable.Score_min, 0)
+
+            val backgroundDrawablePath = attr.getString(R.styleable.Score_score_background)
+
+            if(backgroundDrawablePath != null) {
+
+                val drawableName =
+                    backgroundDrawablePath.split("/")[backgroundDrawablePath.split("/").size - 1]
+
+                val drawableResource = resources.getIdentifier(drawableName.substring(0, drawableName.indexOf('.')),
+                        "drawable",
+                        ctx.packageName
+                    )
+
+                println("drawableResource is $drawableResource")
+
+                this.background = ContextCompat.getDrawable(ctx, drawableResource)
+            }
+
+            this.setPadding(15.toPx.toInt(), 5.toPx.toInt(), 10.toPx.toInt(), 10.toPx.toInt())
 
             do {
-                val switch = ToggleButton(ctx)
+                val switch = CheckBox(ctx)
 
-                switch.setOnClickListener { switch -> onClick(switch as ToggleButton) }
+                switch.buttonDrawable = ContextCompat.getDrawable(ctx, R.drawable.selector_checkbox)
+
+                switch.setOnClickListener {
+
+                    if (!switch.isSelected) {
+                        switch.isChecked = true
+                        switch.isSelected = true
+
+                        for(b in buttons){
+
+                            if(buttons.indexOf(b) < buttons.indexOf(switch)) b.isChecked = true
+
+                            if(buttons.indexOf(b) > buttons.indexOf(switch)) b.isChecked = false
+                        }
+                    } else {
+                        switch.isChecked = false
+                        switch.isSelected = false
+
+                        for(b in buttons){
+                            if(buttons.indexOf(b) > buttons.indexOf(switch)) b.isChecked = false
+                        }
+                    }
+
+                    for(i in 0 until min) buttons[i].isChecked = true
+                }
 
                 buttons.add(switch)
 
@@ -48,24 +97,18 @@ class Score @JvmOverloads constructor (ctx : Context, attributeSet: AttributeSet
                 maxButtons--
             }while (maxButtons > 0)
 
+            for(i in 0 until min) buttons[i].isChecked = true
+
             attr.recycle()
         }
     }
 
-    fun onClick(toggleButton: ToggleButton){
+    fun getLevel() : Int{
 
-        if(toggleButton.isChecked){
-            for(b in buttons){
+        var level = 0
 
-                if(buttons.indexOf(b) < buttons.indexOf(toggleButton)) b.isChecked = true
+        for(b in buttons) if(b.isChecked) level++
 
-                if(buttons.indexOf(b) > buttons.indexOf(toggleButton)) b.isChecked = false
-            }
-        }
-        else{
-            for(b in buttons){
-                if(buttons.indexOf(b) > buttons.indexOf(toggleButton)) b.isChecked = false
-            }
-        }
+        return level
     }
 }
