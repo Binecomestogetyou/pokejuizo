@@ -1,9 +1,11 @@
 package com.bine.pokejuizo.trainer
 
 import androidx.room.*
+import com.bine.pokejuizo.Converters
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+@TypeConverters(Converters::class)
 interface TrainerDAO {
 
     @Insert

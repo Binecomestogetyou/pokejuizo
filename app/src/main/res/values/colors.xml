@@ -16,4 +16,7 @@
     <color name="clever_green">#ffaed495</color>
     <color name="cute_pink">#fff7b2c5</color>
     <color name="skill_red">#ffc74b34</color>
+    <color name="attributebox_grey">#ff414042</color>
+    <color name="border_red">#ffb24631</color>
+    <color name="fill_red">#ffe55035</color>
 </resources>

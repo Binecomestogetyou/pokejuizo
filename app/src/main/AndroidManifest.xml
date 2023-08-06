@@ -33,15 +33,6 @@
             android:exported="false" />
         <activity
             android:name=".trainer.ShowTrainer"
-            android:exported="false" />
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LibraryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".trainer.NewTrainerActivity"
             android:exported="true" >
 
             <intent-filter>
@@ -50,6 +41,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LibraryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".trainer.NewTrainerActivity"
+            android:exported="true" />
         <activity
             android:name=".TrainerActivity"
             android:exported="false" />

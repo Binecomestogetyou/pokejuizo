@@ -92,4 +92,13 @@
     <string name="Lore">Lore</string>
     <string name="Ciência">Ciência</string>
     <string name="Medicina">Medicina</string>
+    <string name="Name">Name</string>
+    <string name="Age">Age</string>
+    <string name="Player">Player</string>
+    <string name="Concept">Concept</string>
+    <string name="Rank">Rank</string>
+    <string name="Nature">Nature</string>
+    <string name="HP">HP</string>
+    <string name="Confidence">Confidence</string>
+    <string name="Money">Money</string>
 </resources>

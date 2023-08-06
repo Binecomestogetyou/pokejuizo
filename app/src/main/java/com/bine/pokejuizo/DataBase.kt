@@ -16,16 +16,18 @@ import com.bine.pokejuizo.move.Move
 import com.bine.pokejuizo.move.MoveDAO
 import com.bine.pokejuizo.nature.Nature
 import com.bine.pokejuizo.nature.NatureDAO
-import com.bine.pokejuizo.pokemon.Pokemon
+import com.bine.pokejuizo.pokemon.PokemonModel
 import com.bine.pokejuizo.pokemon.PokemonDAO
 import com.bine.pokejuizo.trainer.Trainer
 import com.bine.pokejuizo.trainer.TrainerDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class, Learnset::class, Pokemon::class], exportSchema = false)
+@Database(version = 1, entities = [Trainer::class, Ability::class, Item::class, Move::class, Nature::class, Learnset::class, PokemonModel::class], exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class DataBase : RoomDatabase() {
 
@@ -46,10 +48,6 @@ abstract class DataBase : RoomDatabase() {
 
         fun getDataBase(context : Context, scope: CoroutineScope) : DataBase {
 
-            for(i in 0..10) println(i)
-            println("I started building a database")
-            for(i in 0..10) println(i)
-
             return instance ?: synchronized(this) {
                 val inst = Room.databaseBuilder(
                     context.applicationContext,
@@ -67,7 +65,7 @@ abstract class DataBase : RoomDatabase() {
     private class DatabaseCallback(
         val context: Context,
         private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
+    ) : Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
@@ -171,7 +169,7 @@ abstract class DataBase : RoomDatabase() {
                     InputStreamReader(context.assets.open("pokedex/$ja"))
                 )
 
-                pokemonDAO.addPokemon(Pokemon(reader.readText()))
+                pokemonDAO.addPokemon(Json.decodeFromString(reader.readText()))
 
                 reader.close()
             }

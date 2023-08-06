@@ -119,63 +119,58 @@ class NewTrainerActivity : AppCompatActivity() {
 
                 trainer.concept = if(TextUtils.isEmpty(textConcept.text)) "" else textConcept.text.toString()
 
-                trainer.confidence = natureViewModel.getConfidence(trainer.nature)
-
                 trainer.money = money.text.toString().toFloat()
 
-                trainer.characteristics.add(Pair(strength.text, strength.getLevel()))
+                trainer.strength = strength.getLevel()
+                trainer.strength = strength.getLevel()
 
-                trainer.characteristics.add(Pair(dexterity.text, dexterity.getLevel()))
+                trainer.dexterity = dexterity.getLevel()
 
-                trainer.characteristics.add(Pair(vitality.text, vitality.getLevel()))
+                trainer.vitality = vitality.getLevel()
 
-                trainer.characteristics.add(Pair(insight.text, insight.getLevel()))
+                trainer.insight = insight.getLevel()
 
-                trainer.hp = trainer.getValue(resources.getString(R.string.Vitalidade)) + 4
+                trainer.tough = tough.getLevel()
 
-                trainer.will = trainer.getValue(resources.getString(R.string.Intuição)) + 2
+                trainer.cool = cool.getLevel()
 
-                trainer.characteristics.add(Pair(tough.text, tough.getLevel()))
+                trainer.beauty = beauty.getLevel()
 
-                trainer.characteristics.add(Pair(cool.text, cool.getLevel()))
+                trainer.clever = clever.getLevel()
 
-                trainer.characteristics.add(Pair(beauty.text, beauty.getLevel()))
+                trainer.cute = cute.getLevel()
 
-                trainer.characteristics.add(Pair(clever.text, clever.getLevel()))
+                trainer.brawl = brawl.getLevel()
 
-                trainer.characteristics.add(Pair(cute.text, cute.getLevel()))
+                trainer.throwSkill = _throw.getLevel()
 
-                trainer.characteristics.add(Pair(brawl.text, brawl.getLevel()))
+                trainer.evasion = evasion.getLevel()
 
-                trainer.characteristics.add(Pair(_throw.text, _throw.getLevel()))
+                trainer.weapons = weapons.getLevel()
 
-                trainer.characteristics.add(Pair(evasion.text, evasion.getLevel()))
+                trainer.alert = alert.getLevel()
 
-                trainer.characteristics.add(Pair(weapons.text, weapons.getLevel()))
+                trainer.athletic = athletic.getLevel()
 
-                trainer.characteristics.add(Pair(alert.text, alert.getLevel()))
+                trainer.natureSkill = nature.getLevel()
 
-                trainer.characteristics.add(Pair(athletic.text, athletic.getLevel()))
+                trainer.stealth = stealth.getLevel()
 
-                trainer.characteristics.add(Pair(nature.text, nature.getLevel()))
+                trainer.allure = allure.getLevel()
 
-                trainer.characteristics.add(Pair(stealth.text, stealth.getLevel()))
+                trainer.etiquette = ettiquete.getLevel()
 
-                trainer.characteristics.add(Pair(allure.text, allure.getLevel()))
+                trainer.intimidate = intimidate.getLevel()
 
-                trainer.characteristics.add(Pair(ettiquete.text, ettiquete.getLevel()))
+                trainer.perform = performance.getLevel()
 
-                trainer.characteristics.add(Pair(intimidate.text, intimidate.getLevel()))
+                trainer.crafts = crafts.getLevel()
 
-                trainer.characteristics.add(Pair(performance.text, performance.getLevel()))
+                trainer.lore = lore.getLevel()
 
-                trainer.characteristics.add(Pair(crafts.text, crafts.getLevel()))
+                trainer.medicine = medicine.getLevel()
 
-                trainer.characteristics.add(Pair(lore.text, lore.getLevel()))
-
-                trainer.characteristics.add(Pair(medicine.text, medicine.getLevel()))
-
-                trainer.characteristics.add(Pair(science.text, science.getLevel()))
+                trainer.science = science.getLevel()
 
                 val intent = Intent(this, ShowTrainer::class.java)
 
